@@ -1,27 +1,43 @@
 package cs.vsu.hatuncev_k_v.EllipseRaster;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class Raster {
-    public static int[] rasterize(int w, int h, PixelSampler sampler) {
-        w = Math.max(1, w); h = Math.max(1, h);
-        int[] argb = new int[w*h];
-        double cx = w/2.0, cy = h/2.0;
 
-        int k = 0;
-        for (int y = 0; y < h; y++) {
-            double ly = (y + 0.5) - cy;
-            for (int x = 0; x < w; x++) {
-                double lx = (x + 0.5) - cx;
-                argb[k++] = sampler.argbAt(lx, ly);
+public class Raster {
+
+    public static Color[][] rasterizeToColorGrid(int width, int height, PixelSampler sampler) {
+        Color[][] pixels = new Color[height][width];
+
+        double centerX = width  / 2.0;
+        double centerY = height / 2.0;
+
+        for (int y = 0; y < height; y++) {
+            double localY = (y + 0.5) - centerY;
+            for (int x = 0; x < width; x++) {
+                double localX = (x + 0.5) - centerX;
+                pixels[y][x] = sampler.colorAt(localX, localY);
             }
         }
-        return argb;
+        return pixels;
     }
 
-    public static BufferedImage toImage(int[] argb, int w, int h) {
-        BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        img.setRGB(0, 0, w, h, argb, 0, w);
-        return img;
+    public static BufferedImage toImage(Color[][] pixels) {
+        int height = pixels.length;
+        int width  = (height > 0) ? pixels[0].length : 0;
+
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        for (int y = 0; y < height; y++) {
+            Color[] row = pixels[y];
+            for (int x = 0; x < width; x++) {
+                image.setRGB(x, y, row[x].getRGB());
+            }
+        }
+        return image;
+    }
+
+    public static BufferedImage rasterizeToImage(int width, int height, PixelSampler sampler) {
+        return toImage(rasterizeToColorGrid(width, height, sampler));
     }
 }

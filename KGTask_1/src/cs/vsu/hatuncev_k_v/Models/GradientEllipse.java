@@ -1,32 +1,38 @@
 package cs.vsu.hatuncev_k_v.Models;
 
-import cs.vsu.hatuncev_k_v.Models.SceneEntity;
 import cs.vsu.hatuncev_k_v.EllipseRaster.PixelSampler;
 import cs.vsu.hatuncev_k_v.EllipseRaster.RadialEllipseSampler;
 import cs.vsu.hatuncev_k_v.EllipseRaster.Raster;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public class GradientEllipse extends SceneEntity {
-    private Color centerColor = new Color(255, 215, 0, 255);
-    private Color edgeColor   = new Color(255, 215, 0, 0);
+    private Color centerColor;
+    private Color edgeColor;
 
-    public GradientEllipse(double x, double y, double w, double h, Color center, Color edge) {
-        super(x, y, w, h);
-        this.centerColor = center;
-        this.edgeColor   = edge;
+    public GradientEllipse(double originX, double originY, double widthPixels, double heightPixels,
+                           Color centerColor, Color edgeColor) {
+        super(originX, originY, widthPixels, heightPixels);
+        this.centerColor = centerColor;
+        this.edgeColor   = edgeColor;
     }
 
     @Override
     public void draw(Graphics2D g) {
-        int w = Math.max(1, (int) Math.round(getWidth()));
-        int h = Math.max(1, (int) Math.round(getHeight()));
+        final int imageWidth  = Math.max(1, (int) Math.round(getWidth()));
+        final int imageHeight = Math.max(1, (int) Math.round(getHeight()));
 
-        PixelSampler sampler = new RadialEllipseSampler(w / 2.0, h / 2.0, centerColor, edgeColor);
+        final double semiAxisX = imageWidth  / 2.0;
+        final double semiAxisY = imageHeight / 2.0;
 
-        int[] argb = Raster.rasterize(w, h, sampler);
-        Image img = Raster.toImage(argb, w, h);
+        PixelSampler sampler = new RadialEllipseSampler(semiAxisX, semiAxisY, centerColor, edgeColor);
 
-        g.drawImage(img, (int) Math.round(getOriginX()), (int) Math.round(getOriginY()), null);
+        BufferedImage image = Raster.rasterizeToImage(imageWidth, imageHeight, sampler);
+
+        final int drawX = (int) Math.round(getOriginX());
+        final int drawY = (int) Math.round(getOriginY());
+        g.drawImage(image, drawX, drawY, null);
     }
 }

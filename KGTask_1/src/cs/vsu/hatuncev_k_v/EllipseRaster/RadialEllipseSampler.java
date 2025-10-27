@@ -3,36 +3,44 @@ package cs.vsu.hatuncev_k_v.EllipseRaster;
 import java.awt.Color;
 
 public class RadialEllipseSampler implements PixelSampler {
-    private final double a, b;     // полуоси
-    private final int argbCenter;  // цвет в центре (непрозрачный или как задашь)
-    private final int argbEdge;    // цвет у границы (обычно с меньшей альфой)
 
-    public RadialEllipseSampler(double a, double b, Color center, Color edge) {
-        this.a = Math.max(1, a);
-        this.b = Math.max(1, b);
-        this.argbCenter = center.getRGB();
-        this.argbEdge   = edge.getRGB();
+    private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
+
+    private final double semiAxisX;
+    private final double semiAxisY;
+    private final Color centerColor;
+    private final Color edgeColor;
+
+    public RadialEllipseSampler(double semiAxisX, double semiAxisY,
+                                Color centerColor, Color edgeColor) {
+        this.semiAxisX = Math.max(1.0, semiAxisX);
+        this.semiAxisY = Math.max(1.0, semiAxisY);
+        this.centerColor = centerColor;
+        this.edgeColor = edgeColor;
     }
 
     @Override
-    public int argbAt(double x, double y) {
-        // нормированное расстояние до границы
-        double t = Math.sqrt((x*x)/(a*a) + (y*y)/(b*b));
-        if (t > 1.0) return 0; // снаружи — прозрачный
-
-        double tt = (t < 0) ? 0 : (t > 1 ? 1 : t);
-        return lerpARGB(argbCenter, argbEdge, tt);
+    public Color colorAt(double localX, double localY) {
+        double t = Math.sqrt(
+                (localX * localX) / (semiAxisX * semiAxisX) +
+                        (localY * localY) / (semiAxisY * semiAxisY)
+        ); // Нормированное расстояние до границы эллипса
+        if (t > 1.0) {
+            return TRANSPARENT;
+        }
+        return lerpColor(centerColor, edgeColor, clamp01(t));
     }
 
-    private static int lerpARGB(int c0, int c1, double t) {
-        int a0=(c0>>>24)&0xFF, r0=(c0>>>16)&0xFF, g0=(c0>>>8)&0xFF, b0=c0&0xFF;
-        int a1=(c1>>>24)&0xFF, r1=(c1>>>16)&0xFF, g1=(c1>>>8)&0xFF, b1=c1&0xFF;
+    public static Color lerpColor(Color c0, Color c1, double t) {
+        t = clamp01(t);
+        int r = (int) Math.round((c0.getRed()     + (c1.getRed()     - c0.getRed())     * t));
+        int g = (int) Math.round((c0.getGreen()   + (c1.getGreen()   - c0.getGreen())   * t));
+        int b = (int) Math.round((c0.getBlue()    + (c1.getBlue()    - c0.getBlue())    * t));
+        int a = (int) Math.round((c0.getAlpha() + (c1.getAlpha() - c0.getAlpha()) * t));
+        return new Color(r, g, b, a);
+    }
 
-        int a = (int)Math.round(a0 + (a1 - a0)*t);
-        int r = (int)Math.round(r0 + (r1 - r0)*t);
-        int g = (int)Math.round(g0 + (g1 - g0)*t);
-        int b = (int)Math.round(b0 + (b1 - b0)*t);
-
-        return (a<<24) | (r<<16) | (g<<8) | b;
+    public static double clamp01(double v) {
+        return (v < 0) ? 0 : (v > 1 ? 1 : v);
     }
 }
