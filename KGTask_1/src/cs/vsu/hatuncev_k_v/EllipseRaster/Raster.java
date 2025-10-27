@@ -9,7 +9,7 @@ public class Raster {
     public static Color[][] rasterizeToColorGrid(int width, int height, PixelSampler sampler) {
         Color[][] pixels = new Color[height][width];
 
-        double centerX = width  / 2.0;
+        double centerX = width / 2.0;
         double centerY = height / 2.0;
 
         for (int y = 0; y < height; y++) {
@@ -24,7 +24,7 @@ public class Raster {
 
     public static BufferedImage toImage(Color[][] pixels) {
         int height = pixels.length;
-        int width  = (height > 0) ? pixels[0].length : 0;
+        int width = (height > 0) ? pixels[0].length : 0;
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 

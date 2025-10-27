@@ -16,15 +16,15 @@ public class GradientEllipse extends SceneEntity {
                            Color centerColor, Color edgeColor) {
         super(originX, originY, widthPixels, heightPixels);
         this.centerColor = centerColor;
-        this.edgeColor   = edgeColor;
+        this.edgeColor = edgeColor;
     }
 
     @Override
     public void draw(Graphics2D g) {
-        final int imageWidth  = Math.max(1, (int) Math.round(getWidth()));
+        final int imageWidth = Math.max(1, (int) Math.round(getWidth()));
         final int imageHeight = Math.max(1, (int) Math.round(getHeight()));
 
-        final double semiAxisX = imageWidth  / 2.0;
+        final double semiAxisX = imageWidth / 2.0;
         final double semiAxisY = imageHeight / 2.0;
 
         PixelSampler sampler = new RadialEllipseSampler(semiAxisX, semiAxisY, centerColor, edgeColor);

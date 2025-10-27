@@ -14,9 +14,9 @@ public class RasterTest {
 
     @Test
     void toImage_preservesPixels_andSize() {
-        Color c0 = new Color(0x11, 0x22, 0x33, 0xFF); // 0xFF112233
-        Color c1 = new Color(0x12, 0x34, 0x56, 0x80); // 0x80123456
-        Color[][] grid = new Color[][] { { c0, c1 } };
+        Color c0 = new Color(0x11, 0x22, 0x33, 0xFF);
+        Color c1 = new Color(0x12, 0x34, 0x56, 0x80);
+        Color[][] grid = new Color[][]{{c0, c1}};
 
         BufferedImage img = Raster.toImage(grid);
 
@@ -33,7 +33,7 @@ public class RasterTest {
         RadialEllipseSampler sampler = new RadialEllipseSampler(
                 w / 2.0, h / 2.0,
                 new Color(0, 0, 0, 255),
-                new Color(0, 0, 0,   0)
+                new Color(0, 0, 0, 0)
         );
 
         BufferedImage img = Raster.rasterizeToImage(w, h, sampler);

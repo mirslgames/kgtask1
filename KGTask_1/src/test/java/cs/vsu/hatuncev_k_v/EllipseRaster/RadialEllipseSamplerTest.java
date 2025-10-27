@@ -13,10 +13,10 @@ public class RadialEllipseSamplerTest {
     @Test
     void colorAt_onBoundary_returnsEdgeColor() {
         var center = new Color(10, 20, 30, 200);
-        var edge   = new Color(40, 50, 60,  80);
+        var edge = new Color(40, 50, 60, 80);
         var sampler = new RadialEllipseSampler(10.0, 20.0, center, edge);
 
-        Color c = sampler.colorAt(10.0, 0.0); // t == 1
+        Color c = sampler.colorAt(10.0, 0.0);
         assertEquals(edge.getRGB(), c.getRGB());
     }
 
@@ -25,7 +25,7 @@ public class RadialEllipseSamplerTest {
         var sampler = new RadialEllipseSampler(
                 10.0, 20.0,
                 new Color(0, 0, 0, 255),
-                new Color(0, 0, 0,   0)
+                new Color(0, 0, 0, 0)
         );
 
         Color c = sampler.colorAt(10.0001, 0.0);
@@ -70,14 +70,14 @@ public class RadialEllipseSamplerTest {
 
     @Test
     void lerp_tHalf_mixesChannelsWithRounding() {
-        Color c0 = new Color(255, 0,   0, 255);
-        Color c1 = new Color(0,   0, 255,   0);
+        Color c0 = new Color(255, 0, 0, 255);
+        Color c1 = new Color(0, 0, 255, 0);
 
         Color mid = RadialEllipseSampler.lerpColor(c0, c1, 0.5);
 
         assertEquals(128, mid.getAlpha());
         assertEquals(128, mid.getRed());
-        assertEquals(0,   mid.getGreen());
+        assertEquals(0, mid.getGreen());
         assertEquals(128, mid.getBlue());
 
         int expectedArgb = (128 << 24) | (128 << 16) | (0) | 128;

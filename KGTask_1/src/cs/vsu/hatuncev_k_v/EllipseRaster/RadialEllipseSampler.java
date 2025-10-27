@@ -33,9 +33,9 @@ public class RadialEllipseSampler implements PixelSampler {
 
     public static Color lerpColor(Color c0, Color c1, double t) {
         t = clamp01(t);
-        int r = (int) Math.round((c0.getRed()     + (c1.getRed()     - c0.getRed())     * t));
-        int g = (int) Math.round((c0.getGreen()   + (c1.getGreen()   - c0.getGreen())   * t));
-        int b = (int) Math.round((c0.getBlue()    + (c1.getBlue()    - c0.getBlue())    * t));
+        int r = (int) Math.round((c0.getRed() + (c1.getRed() - c0.getRed()) * t));
+        int g = (int) Math.round((c0.getGreen() + (c1.getGreen() - c0.getGreen()) * t));
+        int b = (int) Math.round((c0.getBlue() + (c1.getBlue() - c0.getBlue()) * t));
         int a = (int) Math.round((c0.getAlpha() + (c1.getAlpha() - c0.getAlpha()) * t));
         return new Color(r, g, b, a);
     }
