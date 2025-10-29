@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class BridgeTest {
-    static { System.setProperty("java.awt.headless", "true"); }
 
     @Test
     void drawBridgeDoesNotThrow() {

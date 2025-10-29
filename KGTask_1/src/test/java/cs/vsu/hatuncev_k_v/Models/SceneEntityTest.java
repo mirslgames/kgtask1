@@ -8,14 +8,13 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SceneEntityPropertiesTest {
-    static { System.setProperty("java.awt.headless", "true"); }
 
     // Минимальная заглушка
     static class DummyEntity extends SceneEntity {
         public DummyEntity(double x, double y, double w, double h, double speed) {
             super(x, y, w, h, speed);
         }
-        @Override public void draw(Graphics2D g) { /* no-op */ }
+        @Override public void draw(Graphics2D g) {  }
     }
 
     @Test

@@ -10,12 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DrawStyleTest {
 
-    static {
-        System.setProperty("java.awt.headless", "true");
-    }
-
     @Test
-    void strokeFactory() {
+    void stroke() {
         DrawStyle ds = DrawStyle.stroke(Color.BLACK, 2f);
         assertNotNull(ds.getStrokeColor());
         assertNull(ds.getFillColor());
@@ -24,7 +20,7 @@ class DrawStyleTest {
     }
 
     @Test
-    void fillFactory() {
+    void fill() {
         DrawStyle ds = DrawStyle.fill(Color.RED);
         assertNull(ds.getStrokeColor());
         assertEquals(Color.RED, ds.getFillColor());
@@ -32,7 +28,7 @@ class DrawStyleTest {
     }
 
     @Test
-    void strokeAndFillFactory() {
+    void strokeAndFill() {
         DrawStyle ds = DrawStyle.strokeAndFill(Color.DARK_GRAY, 1.5f, Color.YELLOW);
         assertEquals(Color.DARK_GRAY, ds.getStrokeColor());
         assertEquals(Color.YELLOW, ds.getFillColor());
@@ -41,7 +37,7 @@ class DrawStyleTest {
     }
 
     @Test
-    void dashedFactory() {
+    void dashed() {
         float[] dash = {4f, 2f};
         DrawStyle ds = DrawStyle.dashed(Color.BLUE, 1.2f, dash);
         assertEquals(Color.BLUE, ds.getStrokeColor());

@@ -27,7 +27,7 @@ public class Main {
         window.getScenePanel().addEntity(cloud2);
         window.getScenePanel().addEntity(cloud3);*/
 
-        GradientEllipse ge = new GradientEllipse(10,10,400,200, Color.BLACK, Color.GRAY);
+        GradientEllipse ge = new GradientEllipse(20, 10, 400, 200, Color.BLACK, Color.GRAY);
         window.getScenePanel().addEntity(ge);
     }
 }

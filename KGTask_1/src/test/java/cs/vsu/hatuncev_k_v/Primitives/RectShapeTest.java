@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class RectShapeTest {
-    static { System.setProperty("java.awt.headless", "true"); }
 
     @Test
     void drawRectDoesNotThrow() {

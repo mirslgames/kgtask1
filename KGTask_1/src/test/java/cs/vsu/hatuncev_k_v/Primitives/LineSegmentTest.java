@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class LineSegmentTest {
-    static { System.setProperty("java.awt.headless", "true"); }
 
     @Test
     void drawLineDoesNotThrow() {

@@ -12,6 +12,7 @@ public class GradientEllipse extends SceneEntity {
     private Color centerColor;
     private Color edgeColor;
 
+    //Для статического эллипса
     public GradientEllipse(double originX, double originY, double widthPixels, double heightPixels,
                            Color centerColor, Color edgeColor) {
         super(originX, originY, widthPixels, heightPixels);
@@ -19,10 +20,18 @@ public class GradientEllipse extends SceneEntity {
         this.edgeColor = edgeColor;
     }
 
+    //Для подвижного эллипса
+    public GradientEllipse(double originX, double originY, double widthPixels, double heightPixels,
+                           Color centerColor, Color edgeColor, int animationSpeed) {
+        super(originX, originY, widthPixels, heightPixels, animationSpeed);
+        this.centerColor = centerColor;
+        this.edgeColor = edgeColor;
+    }
+
     @Override
     public void draw(Graphics2D g) {
-        final int imageWidth = Math.max(1, (int) Math.round(getWidth()));
-        final int imageHeight = Math.max(1, (int) Math.round(getHeight()));
+        final int imageWidth = (int) Math.round(getWidth());
+        final int imageHeight = (int) Math.round(getHeight());
 
         final double semiAxisX = imageWidth / 2.0;
         final double semiAxisY = imageHeight / 2.0;

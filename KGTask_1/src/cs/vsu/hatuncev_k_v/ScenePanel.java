@@ -13,9 +13,9 @@ public class ScenePanel extends JPanel implements ActionListener {
 
     private SceneState currentSceneState;
     private final ArrayList<SceneEntity> sceneEntities = new ArrayList<>();
-    public  final Timer timer;
+    public final Timer timer;
 
-    public ScenePanel(int width, int  height, int fps) {
+    public ScenePanel(int width, int height, int fps) {
         setPreferredSize(new Dimension(width, height));
         setBackground(Color.WHITE);
         setOpaque(true);
@@ -33,7 +33,8 @@ public class ScenePanel extends JPanel implements ActionListener {
         requestFocusInWindow();
 
         addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override public void keyPressed(java.awt.event.KeyEvent e) {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
                 int code = e.getKeyCode();
                 double step = 0.5;
 
@@ -66,6 +67,7 @@ public class ScenePanel extends JPanel implements ActionListener {
             animatedSceneEntities.add(entity);
         }*/
     }
+
     public void removeEntity(SceneEntity entity) {
         sceneEntities.remove(entity);
     }
@@ -95,7 +97,7 @@ public class ScenePanel extends JPanel implements ActionListener {
 
         int panelW = getWidth();
 
-        for(SceneEntity entity : sceneEntities){
+        for (SceneEntity entity : sceneEntities) {
             entity.animateMove(currentSceneState.speedCoefficient, 0);
             wrapHorizontally(entity, panelW);
         }
